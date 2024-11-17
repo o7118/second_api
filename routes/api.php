@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\logincontroller;
 use App\Http\Controllers\registrationcontroller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -9,3 +10,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/registration', [registrationcontroller::class, 'safe']);
+Route::post('/login', [logincontroller::class, 'login']);

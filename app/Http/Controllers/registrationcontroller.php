@@ -21,7 +21,8 @@ class registrationcontroller extends Controller
         ]);
         return response()->json
         ([
-            'message' => 'lets gooo'
+            'message' => 'user created',
+            
         ]);
     }
 }
