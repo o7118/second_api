@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('number');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('referral_code');
+            $table->string('referral_point');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

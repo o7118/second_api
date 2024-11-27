@@ -24,7 +24,7 @@ class logincontroller extends Controller
         if(Hash::check($request->password, $user->password))
         {
             Auth::user($user);
-            return response()->json([loginresource::class]);
+            return response()->json([new loginresource($user)]);
         }
 
         else
