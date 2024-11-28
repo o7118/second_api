@@ -16,6 +16,7 @@ class registerationresource extends JsonResource
     {
         return[
             'message' => 'user',
+            'first name' => $this->first_name,
             'api_token' => $this->createToken('API Token')->plainTextToken,
         ];
     }

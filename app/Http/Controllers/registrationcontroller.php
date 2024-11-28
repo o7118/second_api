@@ -11,6 +11,24 @@ class registrationcontroller extends Controller
 {
     public function safe(registerationrequest $request)
     {
+        //check if reffral code is valid and add point to the owner of the code
+
+        $referral_owner = User::where('referral_code', $request->referral)->first();
+
+        if($referral_owner)
+        {
+            $referral_owner->referral_point += 1 ;
+        }
+
+        //create user referralcode and check if it doesnt exist in the db
+        
+        $user_referral_code = rand(1111,9999);
+
+        if(User::where('referral_code', $user_referral_code)->first())
+        {
+            $user_referral_code = rand(1111,9999);
+        }
+
         $user = User::create
         ([
             'first_name' => $request->first_name,

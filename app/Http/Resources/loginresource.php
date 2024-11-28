@@ -16,7 +16,7 @@ class loginresource extends JsonResource
     {
         return [
             'message' => 'login successful',
-            'user' => $this
+            'user' => $this->first_name,
         ];
     }
 }
