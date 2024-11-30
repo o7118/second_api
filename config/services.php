@@ -35,11 +35,6 @@ return [
         ],
     ],
 
-    'facebook' => [
-        'client_id' => env('462370256480852'),
-        'client_secret' => env('624ebe9993aa2d5559ec63f66df0e1fb'),
-        'redirect' => env('http://localhost:8000/auth/facebook/callback'),
-    ],
 
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
