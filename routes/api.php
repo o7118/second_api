@@ -6,8 +6,11 @@ use App\Http\Controllers\socialcontroller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/auth/google/redirect', [SocialController::class, 'redirect'])->name('google.redirect');
-Route::get('/auth/google/callback', [SocialController::class, 'callback'])->name('google.callback');
+
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/auth/google/redirect', [SocialController::class, 'redirect'])->name('google.redirect');
+    Route::get('/auth/google/callback', [SocialController::class, 'callback'])->name('google.callback');
+});
 
 // For API (Postman-friendly):
 Route::post('/auth/google/token', [SocialController::class, 'handleGoogleToken'])->name('google.token');

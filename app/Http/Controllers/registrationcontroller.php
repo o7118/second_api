@@ -13,11 +13,12 @@ class registrationcontroller extends Controller
     {
         //check if reffral code is valid and add point to the owner of the code
 
-        $referral_owner = User::where('referral_code', $request->referral)->first();
+        $referral_owner = User::query()->where('referral_code', $request->referral)->first();
 
         if($referral_owner)
         {
-            $referral_owner->referral_point += 1 ;
+            $referral_owner->referral = 'hello';
+            return response()->json(['message'=>'seen']);
         }
 
         //create user referralcode and check if it doesnt exist in the db
@@ -29,20 +30,20 @@ class registrationcontroller extends Controller
             $user_referral_code = rand(1111,9999);
         }
 
-        $user = User::create
-        ([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'number' => $request->number,
-            'email_verified_at'=>false,
-            'referral_code' => rand(1111,9999),
-            'referral_point' => 0,
-            'password' => $request->password,
-        ]);
-        return response()->json
-        ([
-            'message' => 'user created', new registerationresource($user)
-        ]);
+        // $user = User::create
+        // ([
+        //     'first_name' => $request->first_name,
+        //     'last_name' => $request->last_name,
+        //     'email' => $request->email,
+        //     'number' => $request->number,
+        //     'email_verified_at'=>false,
+        //     'referral_code' => rand(1111,9999),
+        //     'referral_point' => 0,
+        //     'password' => $request->password,
+        // ]);
+        // return response()->json
+        // ([
+        //     'message' => 'user created', new registerationresource($user)
+        // ]);
     }
 }
