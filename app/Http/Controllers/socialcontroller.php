@@ -4,62 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use NunoMaduro\Collision\Adapters\Phpunit\State;
 
 class socialcontroller extends Controller
 {
     public function redirect()
     {
         //dd(env('GOOGLE_CLIENT_ID'));
+        session()->start();
 
         return Socialite::driver('google')->redirect();
     }
 
     public function callback()
     {
-        $googleuser = Socialite::driver('google')->user();
-            if($googleuser)
-            {
-                dd($googleuser);
-            }
-        try
+        $emaildetail = Socialite::driver('google')->stateless()->user();
+        $fullname = $emaildetail->name;
+        $firstname = explode(' ', $fullname)[0];
+        $lastname = explode(' ', $fullname)[1];
+        $email = $emaildetail->email;
+        $user = User::where('email', $email)->first();
+        if(!$user)
         {
-            $googleuser = Socialite::driver('google')->user();
-            if($googleuser)
-            {
-                dd($googleuser);
-            }
-            // $user = 'john';//User::query()->where('email', $googleuser->email)->first();
-            // if ($user)
-            // {
-            //     return response()->json([
-            //         'message'=>'user found'
-            //     ]);
-            // }
+            User::create([
+                'first_name' => $emaildetail->$firstname,
 
-            // else
-            // {
-            //     return response()->json([
-            //         'message'=>'user not found'
-            //     ]);
-            // }
+            ]);
         }
 
-        catch (\Exception $e)
-        {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-        // try {
-        //     $googleUser = Socialite::driver('google')->user();
-
-        //     // Process user data
-        //     return response()->json([
-        //         'name' => $googleUser->getName(),
-        //         'email' => $googleUser->getEmail(),
-        //         'avatar' => $googleUser->getAvatar(),
-        //     ]);
-        // } catch (\Exception $e) {
-        //     return response()->json(['error' => $e->getMessage()], 500);
-        // }
+        Auth::user($user);
+        return response()->json([
+            'message' => 'login successful',
+            'user' => $user,
+        ]);
     }
 }

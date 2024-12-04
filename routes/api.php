@@ -6,8 +6,20 @@ use App\Http\Controllers\socialcontroller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// protected $middlewareGroups = [
+//     'api' => [
+//         \Illuminate\Session\Middleware\StartSession::class,
+//         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+//         \Illuminate\Routing\Middleware\SubstituteBindings::class,
+//     ],
+// ];
 
-Route::group(['middleware' => ['web']], function () {
+Route::middleware([
+    \Illuminate\Session\Middleware\StartSession::class,
+    \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+    \Illuminate\Routing\Middleware\SubstituteBindings::class,
+])->group(function () {
+    // Define your routes here
     Route::get('/auth/google/redirect', [SocialController::class, 'redirect'])->name('google.redirect');
     Route::get('/auth/google/callback', [SocialController::class, 'callback'])->name('google.callback');
 });
