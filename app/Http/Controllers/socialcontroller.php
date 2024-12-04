@@ -32,7 +32,9 @@ class socialcontroller extends Controller
                 'first_name' => $firstname,
                 'last_name' => $lastname,
                 'email' => $email,
-
+                'email_verified_at' => true,
+                'referral_code' => rand(1111, 9999),
+                'referral_point' => 0,
             ]);
         }
 
